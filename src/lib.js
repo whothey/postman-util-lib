@@ -26,7 +26,12 @@ function createJws (secret, payload, header, exp, alg, kid) {
   var currentTime = Math.ceil((new Date()).getTime() / 1000) // the current time in seconds
   var expirationTime = currentTime + exp
 
-  const jwtHeader = Object.assign({ typ: 'JWT' }, header, { alg, kid })
+  const jwtHeader = Object.assign(
+    { typ: 'JWT' },
+    header,
+    alg != null ? { alg } : {},
+    kid != null ? { kid } : {},
+  );
 
   const jwtBody = Object.assign(
     {
